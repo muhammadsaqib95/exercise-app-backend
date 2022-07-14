@@ -10,7 +10,7 @@ app.use(cors());
 app.use(express.json());
 
 const uri = process.env.ATLAS_URI;
- mongoose.connect('mongodb+srv://m001-student:m001-student@sandbox.etcmq.mongodb.net/?retryWrites=true&w=majority');
+ mongoose.connect(uri);
 const connection  = mongoose.connection;
 connection.once('open', () => {
     console.log('Mongo DB connected successfully');
