@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const formidable = require('formidable');
 let User = require('../models/user.model');
 
 router.route('/').get((req, res) => {
@@ -7,15 +8,15 @@ router.route('/').get((req, res) => {
     .catch(err => res.status(400).json('Error : ' + err))
 })
 
-router.route('/add').post((req, res) => {
-    const name = req.body.name;
-    console.log(name);
-    const newUser = new User({name : name});
-
-    console.log(newUser);
-    newUser.save()
-    .then(() => res.json(name + ' user added!'))
-    .catch(err => res.status(400).json('Error : ' + err))
+router.route('/add').post(async(req, res) => {
+    const newUser = new User({name : req.body.name});
+        try{
+            const result = await newUser.save()
+            res.json(result)
+        }
+        catch(error) {
+            res.status(400).json('Error : ' + error)
+        }
 })
 
 module.exports = router;
