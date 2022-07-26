@@ -1,34 +1,31 @@
 const router = require("express").Router();
 let Excercise = require("../models/exercise.model");
 
-
 router.route("/").get((req, res) => {
-  Excercise.find({name : req.query.name})
+  Excercise.find({ name: req.query.name })
     .then((excercises) => res.json(excercises))
     .catch((err) => res.status(400).json("Error : " + err));
 });
 
 router.route("/add").post((req, res) => {
-        try{
-
-            const name = req.body.name;
-            const description = req.body.description;
-            const duration = Number(req.body.duration);
-            const date = Date.parse(req.body.date);
-            const newExercise = new Excercise({
-                name,
-                description,
-                duration,
-                date,
-            });
-            newExercise
-            .save()
-            .then(() => res.json(" exercise added!"))
-            .catch((err) => res.status(400).json("Error : " + err));
-        }
-        catch(error){
-            res.status(400).json("Error : " + error);
-        }
+  try {
+    const name = req.body.name;
+    const description = req.body.description;
+    const duration = Number(req.body.duration);
+    const date = Date.parse(req.body.date);
+    const newExercise = new Excercise({
+      name,
+      description,
+      duration,
+      date,
+    });
+    newExercise
+      .save()
+      .then(() => res.json(" exercise added!"))
+      .catch((err) => res.status(400).json("Error : " + err));
+  } catch (error) {
+    res.status(400).json("Error : " + error);
+  }
 });
 router.route("/:id").get((req, res) => {
   Excercise.findById(req.params.id)
