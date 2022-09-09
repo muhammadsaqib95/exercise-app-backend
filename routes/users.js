@@ -2,6 +2,7 @@ const router = require('express').Router();
 let User = require('../models/user.model');
 const jwt = require('jsonwebtoken');
 const userAuth = require('../Auth');
+
 router.route('/').get(userAuth,(req, res) => {
     User.find()
     .then(users => res.json(users))
